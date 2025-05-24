@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="https://lixingyu.cn/star.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聊天室</title>
+    <title>im</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-icons.css">
     <style>
@@ -111,7 +111,7 @@
             border-bottom: 1px solid #e0e0e0;
             background-color: #f8f9fa;
         }
-        
+
         .switch {
             position: relative;
             display: inline-block;
@@ -119,13 +119,13 @@
             height: 24px;
             margin-left: auto;
         }
-        
+
         .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-        
+
         .slider {
             position: absolute;
             cursor: pointer;
@@ -137,7 +137,7 @@
             transition: .4s;
             border-radius: 24px;
         }
-        
+
         .slider:before {
             position: absolute;
             content: "";
@@ -149,20 +149,20 @@
             transition: .4s;
             border-radius: 50%;
         }
-        
+
         input:checked + .slider {
             background-color: rgb(255, 107, 0);
         }
-        
+
         input:checked + .slider:before {
             transform: translateX(26px);
         }
-        
+
         .switch-label {
             margin-right: 10px;
             font-size: 14px;
         }
-        
+
         /* 添加历史记录控制样式 */
         .history-control {
             display: flex;
@@ -172,14 +172,14 @@
             background-color: #f8f9fa;
             font-size: 14px;
         }
-        
+
         .history-control select {
             margin-left: 10px;
             padding: 4px 8px;
             border-radius: 4px;
             border: 1px solid #ced4da;
         }
-        
+
         /* 连接状态指示器 */
         .connection-status {
             position: fixed;
@@ -191,52 +191,52 @@
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        
+
         .status-connecting {
             background-color: #ffc107;
             color: #212529;
         }
-        
+
         .status-connected {
             background-color: rgb(255, 107, 0);
             color: white;
         }
-        
+
         .status-error {
             background-color: #dc3545;
             color: white;
         }
-        
+
         /* 调整退出按钮样式 */
         #logout-btn {
             margin-left: 10px;
             border-color: rgba(255,255,255,0.5);
         }
-        
+
         /* 用户名显示样式 */
         #username-display {
             font-weight: 500;
             display: flex;
             align-items: center;
         }
-        
+
         /* 在用户名前添加小图标 */
         #username-display::before {
             content: "👤";
             margin-right: 5px;
         }
-        
+
         /* 调整按钮颜色 */
         .btn-primary {
             background-color: rgb(255, 107, 0);
             border-color: rgb(255, 107, 0);
         }
-        
+
         .btn-primary:hover {
             background-color: rgb(230, 95, 0);
             border-color: rgb(230, 95, 0);
         }
-        
+
         /* Base64开关颜色 */
         input:checked + .slider {
             background-color: rgb(255, 107, 0);
@@ -246,11 +246,11 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h4>聊天室</h4>
+            <h4>im</h4>
             <div id="username-display"></div>
             <button class="btn btn-sm btn-outline-light" id="logout-btn">退出</button>
         </div>
-        
+
         <!-- 添加base64开关 -->
         <div class="switch-container">
             <span class="switch-label">使用Base64编码消息</span>
@@ -259,7 +259,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <!-- 添加历史记录控制 -->
         <div class="history-control">
             <span>历史消息显示：</span>
@@ -268,7 +268,7 @@
                 <option value="all">所有历史</option>
             </select>
         </div>
-        
+
         <div class="chat-area" id="chat-messages">
             <!-- 消息将在这里动态添加 -->
         </div>
@@ -279,10 +279,10 @@
             </button>
         </div>
     </div>
-    
+
     <!-- 添加一个固定的解码显示区域 -->
     <div class="decode-display-area" id="decode-display"></div>
-    
+
     <!-- 连接状态指示器 -->
     <div class="connection-status status-connecting" id="connection-status">
         正在连接...
@@ -303,7 +303,7 @@
                 }
                 document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
             },
-            
+
             // 获取cookie
             getCookie: function(name) {
                 const nameEQ = name + "=";
@@ -319,20 +319,20 @@
                 }
                 return null;
             },
-            
+
             // 删除cookie
             deleteCookie: function(name) {
                 document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
             }
         };
-        
+
         // Base64编码和解码函数
         function encodeBase64(str) {
             return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
                 return String.fromCharCode('0x' + p1);
             }));
         }
-        
+
         function decodeBase64(str) {
             try {
                 return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
@@ -342,15 +342,15 @@
                 return str; // 如果解码失败，返回原字符串
             }
         }
-        
+
         // 优先从cookie获取用户名，如果没有则从localStorage获取
         const username = CookieUtil.getCookie('chatUsername') || localStorage.getItem('chatUsername');
         if (!username) {
             window.location.href = '/';
         }
-        
+
         document.getElementById('username-display').textContent = username;
-        
+
         // 添加退出登录功能
         function logout() {
             // 清除cookie和localStorage中的用户名
@@ -366,10 +366,10 @@
             // 跳转到登录页
             window.location.href = '/';
         }
-        
+
         // 绑定退出按钮事件
         document.getElementById('logout-btn').addEventListener('click', logout);
-        
+
         let stompClient = null;
         const chatArea = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message-input');
@@ -377,7 +377,7 @@
         const decodeDisplay = document.getElementById('decode-display');
         const base64Toggle = document.getElementById('base64-toggle');
         const historyOption = document.getElementById('history-option');
-        
+
         // 从localStorage加载用户的base64偏好设置
         const loadBase64Preference = () => {
             const preference = localStorage.getItem('useBase64Encoding');
@@ -386,44 +386,44 @@
                 base64Toggle.checked = preference === 'true';
             }
         };
-        
+
         // 保存用户的base64偏好设置
         const saveBase64Preference = () => {
             localStorage.setItem('useBase64Encoding', base64Toggle.checked);
         };
-        
+
         // 初始化加载用户偏好
         loadBase64Preference();
-        
+
         // 添加开关监听事件
         base64Toggle.addEventListener('change', saveBase64Preference);
-        
+
         // 加载历史消息
         function loadHistoryMessages() {
             // 根据选择的选项决定加载哪个API
             const selectedOption = historyOption.value;
             const apiUrl = selectedOption === 'all' ? '/api/chat/all-history' : '/api/chat/history';
-            
+
             // 在加载前显示加载提示
             chatArea.innerHTML = '<div class="text-center p-3">加载历史消息中...</div>';
-            
+
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(messages => {
                     // 清空现有消息显示区域
                     chatArea.innerHTML = '';
-                    
+
                     // 如果没有消息，显示提示
                     if (messages.length === 0) {
                         chatArea.innerHTML = '<div class="text-center p-3">暂无历史消息</div>';
                         return;
                     }
-                    
+
                     // 显示历史消息
                     messages.forEach(message => {
                         displayMessage(message);
                     });
-                    
+
                     // 滚动到底部
                     chatArea.scrollTop = chatArea.scrollHeight;
                 })
@@ -432,52 +432,52 @@
                     chatArea.innerHTML = '<div class="text-center p-3 text-danger">加载历史消息失败，请刷新页面重试</div>';
                 });
         }
-        
+
         // 获取连接状态指示器
         const connectionStatus = document.getElementById('connection-status');
-        
+
         function connect() {
             // 显示连接中状态
             connectionStatus.className = 'connection-status status-connecting';
             connectionStatus.textContent = '正在连接...';
-            
+
             // 根据当前页面协议自动选择WebSocket协议
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsUrl = protocol + '//' + window.location.host + '/ws';
-            
+
             // 创建SockJS连接，并在URL中添加可选参数以强制使用WS
             const socket = new SockJS('/ws', null, {
                 transports: ['websocket'],
                 /* 如果WSS仍然有问题，可以取消注释下面一行强制使用WS */
                 // server: window.location.hostname + (window.location.port ? ':' + window.location.port : '')
             });
-            
+
             console.log('Connecting to: ' + wsUrl);
             stompClient = Stomp.over(socket);
-            
+
             // 禁用STOMP调试日志
             stompClient.debug = null;
-            
+
             stompClient.connect({}, function(frame) {
                 console.log('Connected: ' + frame);
-                
+
                 // 更新连接状态
                 connectionStatus.className = 'connection-status status-connected';
                 connectionStatus.textContent = '已连接';
-                
+
                 // 三秒后隐藏连接状态
                 setTimeout(function() {
                     connectionStatus.style.display = 'none';
                 }, 3000);
-                
+
                 // 先加载历史消息
                 loadHistoryMessages();
-                
+
                 stompClient.subscribe('/topic/public', function(message) {
                     const chatMessage = JSON.parse(message.body);
                     displayMessage(chatMessage);
                 });
-                
+
                 // 发送用户加入消息
                 sendJoinMessage();
             }, function(error) {
@@ -485,11 +485,11 @@
                 // 更新连接状态
                 connectionStatus.className = 'connection-status status-error';
                 connectionStatus.textContent = '连接失败';
-                
+
                 chatArea.innerHTML += '<div class="system-message text-danger">连接到聊天服务器失败，请刷新页面重试。</div>';
                 console.log('Could not connect to WebSocket server. Please refresh the page to try again.');
             });
-            
+
             // 监听连接断开事件
             socket.onclose = function() {
                 console.log('WebSocket connection closed');
@@ -498,21 +498,21 @@
                 connectionStatus.style.display = 'block';
             };
         }
-        
+
         function sendJoinMessage() {
             if (stompClient) {
                 const chatMessage = {
                     sender: username,
                     type: 'JOIN'
                 };
-                
+
                 stompClient.send("/app/chat.addUser", {}, JSON.stringify(chatMessage));
             }
         }
-        
+
         function sendMessage() {
             const messageContent = messageInput.value.trim();
-            
+
             if (messageContent && stompClient) {
                 // 所有消息都以原始形式发送，不编码
                 const chatMessage = {
@@ -520,126 +520,126 @@
                     content: messageContent,
                     type: 'CHAT'
                 };
-                
+
                 stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
                 messageInput.value = '';
             }
         }
-        
+
         // 创建一个格式化时间的函数，确保显示正确的时区时间
         function formatMessageTime(timeString) {
             // 如果没有时间信息，返回空字符串
             if (!timeString) return '';
-            
+
             // 如果时间字符串已经包含完整的时区信息，直接返回
             if (timeString.length > 8) return timeString;
-            
+
             // 假设输入的是HH:mm:ss格式，直接返回即可（服务器已经调整为中国时区）
             return timeString;
         }
-        
+
         function displayMessage(message) {
             const messageElement = document.createElement('div');
-            
+
             if (message.type === 'JOIN') {
                 messageElement.classList.add('system-message');
-                messageElement.textContent = `${message.sender} 加入了聊天室`;
+                messageElement.textContent = `${message.sender} 加入了im`;
             } else if (message.type === 'LEAVE') {
                 messageElement.classList.add('system-message');
-                messageElement.textContent = `${message.sender} 离开了聊天室`;
+                messageElement.textContent = `${message.sender} 离开了im`;
             } else {
                 messageElement.classList.add('message-container');
-                
+
                 const messageBubble = document.createElement('div');
                 messageBubble.classList.add('message');
-                
+
                 if (message.sender === username) {
                     messageBubble.classList.add('sent');
                 } else {
                     messageBubble.classList.add('received');
-                    
+
                     const usernameSpan = document.createElement('div');
                     usernameSpan.classList.add('username');
                     usernameSpan.textContent = message.sender;
                     messageBubble.appendChild(usernameSpan);
                 }
-                
+
                 // 创建消息内容元素
                 const messageContent = document.createElement('div');
                 messageContent.classList.add('content');
-                
+
                 // 根据开关状态决定显示原始内容还是base64编码后的内容
                 const shouldEncodeDisplay = base64Toggle.checked;
                 let displayContent = message.content;
                 let originalContent = message.content;
-                
+
                 // 如果要显示为编码形式，对内容进行编码
                 if (shouldEncodeDisplay) {
                     displayContent = encodeBase64(message.content);
                     messageContent.style.cursor = 'help';
-                    
+
                     // 添加鼠标悬浮事件，显示原始内容
                     messageContent.addEventListener('mouseenter', function(e) {
                         decodeDisplay.textContent = originalContent;
                         decodeDisplay.style.display = 'block';
                     });
-                    
+
                     messageContent.addEventListener('mouseleave', function() {
                         decodeDisplay.style.display = 'none';
                     });
                 }
-                
+
                 messageContent.textContent = displayContent;
                 messageBubble.appendChild(messageContent);
-                
+
                 const timeSpan = document.createElement('span');
                 timeSpan.classList.add('time');
                 // 使用格式化函数处理时间
                 timeSpan.textContent = formatMessageTime(message.time);
                 messageBubble.appendChild(timeSpan);
-                
+
                 messageElement.appendChild(messageBubble);
             }
-            
+
             chatArea.appendChild(messageElement);
             chatArea.scrollTop = chatArea.scrollHeight;
         }
-        
+
         // 事件监听
         sendButton.addEventListener('click', sendMessage);
-        
+
         messageInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         });
-        
+
         // 连接到WebSocket服务器
         connect();
-        
+
         // 关闭页面前断开连接
         window.addEventListener('beforeunload', function() {
             if (stompClient !== null) {
                 stompClient.disconnect();
             }
         });
-        
+
         // 页面上的base64开关切换时，重新加载所有消息以应用新设置
         base64Toggle.addEventListener('change', function() {
             saveBase64Preference();
-            
+
             // 清空聊天区域
             chatArea.innerHTML = '';
-            
+
             // 重新加载历史消息以应用新的显示方式
             loadHistoryMessages();
         });
-        
+
         // 保存历史记录选项到localStorage
         function saveHistoryOption() {
             localStorage.setItem('historyOption', historyOption.value);
         }
-        
+
         // 加载历史记录选项
         function loadHistoryOption() {
             const savedOption = localStorage.getItem('historyOption');
@@ -647,10 +647,10 @@
                 historyOption.value = savedOption;
             }
         }
-        
+
         // 初始化加载历史记录选项
         loadHistoryOption();
-        
+
         // 添加历史记录选择器变更事件
         historyOption.addEventListener('change', function() {
             saveHistoryOption();
@@ -658,4 +658,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
